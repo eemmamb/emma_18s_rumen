@@ -22,11 +22,11 @@ mkdir -p "$OUTBASE"
 # Run NanoPlot for each sample with a different line/point color
 echo "Running NanoPlot on barcode01"
 NanoPlot --fastq "$INPUT1" --outdir "$OUTBASE/sample1" --threads 2 \
- --color "blue" --plots dot kde --N50 --title "Sample 1"
+ --color "cornflowerblue" --plots dot kde --N50 --title "Sample 1"
 
 echo "Running NanoPlot on barcode02"
 NanoPlot --fastq "$INPUT2" --outdir "$OUTBASE/sample2" --threads 2 \
-  --color "green" --plots dot kde --N50 --title "Sample 2"
+  --color "lightgreen" --plots dot kde --N50 --title "Sample 2"
 
 echo "Running NanoPlot on barcode03"
 NanoPlot --fastq "$INPUT3" --outdir "$OUTBASE/sample3" --threads 2 \
@@ -40,6 +40,6 @@ NanoPlot --fastq "$INPUT4" --outdir "$OUTBASE/sample4" --threads 2 \
  echo "Running NanoPlot on all samples together"
  cat "$INPUT1" "$INPUT2" "$INPUT3" "$INPUT4" > "$OUTBASE/all_samples.fastq"
 NanoPlot --fastq "$OUTBASE/all_samples.fastq" --outdir "$OUTBASE/all_samples" --threads 2 \
-  --color "purple" --plots dot kde --N50 --title "All Samples" 
+  --color "violet" --plots dot kde --N50 --title "All Samples" 
 
 echo "NanoPlot runs completed."
