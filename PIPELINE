@@ -1,0 +1,7 @@
+singularity exec --nv containers/dorado_v0.9.5.sif dorado \
+    basecaller \
+    sup \
+    --recursive /projects/health_sciences/bms/biochemistry/dearden_lab/sarahinwood/emma-rumen-18s/data/emma_18s_barcoding \
+    --kit-name SQK-NBD114-24 \
+    > rumen_18s_basecalling/all.bam
+
