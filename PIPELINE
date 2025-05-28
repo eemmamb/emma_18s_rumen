@@ -49,3 +49,34 @@ NanoPlot --fastq output/03_nanoplot/all_samples/all_samples.fastq --outdir "outp
 
 echo "NanoPlot runs completed."
 
+# List of files
+DEMUXED_FILES=("barcode01.fastq" "barcode02.fastq" "barcode03.fastq" "barcode04.fastq")
+
+## chopper - filter reads based on length and quality
+for FILE in "${DEMUXED_FILES[@]}"; do
+    BASENAME=$(basename "$FILE" .fastq)
+    echo "Chopper filtering $FILE"
+    singularity exec containers/chopper_0.1.0.sif \
+        /usr/local/bin/chopper \
+        --input "$INPUT_DIR/$FILE" \
+        --threads 50 \
+        --quality 15 \
+        --minlength 430 \
+        --maxlength 530 \
+        > "$OUTPUT_DIR/${BASENAME}_filtered.fastq"
+done
+
+FILTERED_FILES=("barcode01_filtered.fastq" "barcode02_filtered.fastq" "barcode03_filtered.fastq" "barcode04_filtered.fastq")
+
+## now trim primer sequence off reads
+for FILE in "${FILTERED_FILES[@]}"; do
+    BASENAME=$(basename "$FILE" .fastq)
+    echo "Chopper cropping primer seq $FILE"
+    singularity exec containers/chopper_0.1.0.sif \
+        /usr/local/bin/chopper \
+        --input "$OUTPUT_DIR/$FILE" \
+        --threads 50 \
+        --headcrop 20 \
+        --tailcrop 19 \
+        > "$OUTPUT_DIR/${BASENAME}_cropped.fastq"
+done
