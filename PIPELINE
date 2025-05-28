@@ -5,3 +5,11 @@ singularity exec --nv containers/dorado_v0.9.5.sif dorado \
     --kit-name SQK-NBD114-24 \
     > rumen_18s_basecalling/all.bam
 
+singularity exec containers/dorado_v0.9.5.sif dorado \
+    demux \
+    --output-dir output/02_demuxed \
+    --no-classify \
+    --threads 50 \
+    --emit-fastq \
+    output/01_basecalled/all.bam
+
